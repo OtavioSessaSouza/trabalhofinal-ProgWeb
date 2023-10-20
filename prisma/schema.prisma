@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "sqlite"
+	url = "file:./dev.db"
+}
+
+// senha,
+// e-mail
+
+Paciente{
+  id Int @id @default(autoincrement())
+  nome String 
+  nascimento DateTime
+  cpf String @unique
+  contato String
+  contatoEmergencia String
+  respCasoMenor String?
+  prontuario Avaliacao @relation(fields:[prontuarioID], references:[id])
+  prontuarioID Int
+}
+
+
+
+Endereco{
+  id Int @id @default(autoincrement())
+  rua String
+  numero Int
+  complemento String
+  bairro String
+  cidade String
+  estado String
+  endereço Paciente @relation(fields:[endereçoID], references:[id])
+  endereçoID Int
+}
+
+
+
+Profissional{
+  id Int @id @default(autoincrement())
+  nome String 
+  nascimento DateTime
+  cpf String @unique
+  crp String @unique
+}
+
+Avaliacao{
+  id Int @id @default(autoincrement())
+  profissional Profissional @relation(fields:[profissionalID], references:[id])
+  profissinalID Int
+	paciente Paciente @relation(fields:[pacienteID], references:[id])
+  pacienteID
+  data DateTime
+  Status Bolean
+  condição String
+  check1 String
+  check2 Int
+  check3 Int
+}
+
+
+Consulta{
+  id Int @id @default(autoincrement())
+  profissional Profissional @relation(fields:[profissionalID], references:[id])
+  profissinalID Int
+	paciente Paciente @relation(fields:[pacienteID], references:[id])
+  pacienteID
+	data DateTime
+	relatório String
+}
+  
