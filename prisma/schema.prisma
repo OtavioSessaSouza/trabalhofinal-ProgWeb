@@ -6,71 +6,69 @@ generator client {
 }
 
 datasource db {
-	provider = "sqlite"
-	url = "file:./dev.db"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 // senha,
 // e-mail
 
-Paciente{
-  id Int @id @default(autoincrement())
-  nome String 
-  nascimento DateTime
-  cpf String @unique
-  contato String
+model Paciente {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  nascimento        DateTime
+  cpf               String      @unique
+  contato           String
   contatoEmergencia String
-  respCasoMenor String?
-  prontuario Avaliacao @relation(fields:[prontuarioID], references:[id])
-  prontuarioID Int
+  respCasoMenor     String?
+  prontuarioID      Int         @unique
+  endereco          Endereco?
+  prontuario        Avaliacao[]
+  consulta          Consulta?
 }
 
-
-
-Endereco{
-  id Int @id @default(autoincrement())
-  rua String
-  numero Int
+model Endereco {
+  id          Int      @id @default(autoincrement())
+  rua         String
+  numero      Int
   complemento String
-  bairro String
-  cidade String
-  estado String
-  endereço Paciente @relation(fields:[endereçoID], references:[id])
-  endereçoID Int
+  bairro      String
+  cidade      String
+  estado      String
+  pacienteID  Int      @unique
+  paciente    Paciente @relation(fields: [pacienteID], references: [id])
 }
 
-
-
-Profissional{
-  id Int @id @default(autoincrement())
-  nome String 
+model Profissional {
+  id         Int        @id @default(autoincrement())
+  nome       String
   nascimento DateTime
-  cpf String @unique
-  crp String @unique
+  cpf        String     @unique
+  crp        String     @unique
+  Avaliacao  Avaliacao?
+  consulta   Consulta?
 }
 
-Avaliacao{
-  id Int @id @default(autoincrement())
-  profissional Profissional @relation(fields:[profissionalID], references:[id])
-  profissinalID Int
-	paciente Paciente @relation(fields:[pacienteID], references:[id])
-  pacienteID
-  data DateTime
-  Status Bolean
-  condição String
-  check1 String
-  check2 Int
-  check3 Int
+model Avaliacao {
+  id             Int          @id @default(autoincrement())
+  profissionalID Int          @unique
+  profissional   Profissional @relation(fields: [profissionalID], references: [id])
+  pacienteID     Int          @unique
+  paciente       Paciente     @relation(fields: [pacienteID], references: [id])
+  data           DateTime
+  status         Boolean
+  condicao       String
+  check1         String
+  check2         Int
+  check3         Int
 }
 
-
-Consulta{
-  id Int @id @default(autoincrement())
-  profissional Profissional @relation(fields:[profissionalID], references:[id])
-  profissinalID Int
-	paciente Paciente @relation(fields:[pacienteID], references:[id])
-  pacienteID
-	data DateTime
-	relatório String
+model Consulta {
+  id             Int          @id @default(autoincrement())
+  profissionalID Int          @unique
+  profissional   Profissional @relation(fields: [profissionalID], references: [id])
+  pacienteID     Int          @unique
+  paciente       Paciente     @relation(fields: [pacienteID], references: [id])
+  data           DateTime
+  relatorio      String
 }
-  
