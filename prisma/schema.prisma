@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 // senha,
@@ -58,9 +58,14 @@ model Avaliacao {
   data           DateTime
   status         Boolean
   condicao       String
-  check1         String
-  check2         Int
-  check3         Int
+  perguntas      QA[]
+}
+
+model QA {
+  id          Int        @id @default(autoincrement())
+  pergunta    String
+  resposta    String
+  avaliacoes   Avaliacao[]
 }
 
 model Consulta {
