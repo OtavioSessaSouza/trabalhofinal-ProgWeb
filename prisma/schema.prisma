@@ -14,7 +14,7 @@ datasource db {
 // e-mail
 
 model Paciente {
-  id                Int         @id @default(autoincrement())
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
   nome              String
   nascimento        DateTime
   cpf               String      @unique
@@ -28,19 +28,19 @@ model Paciente {
 }
 
 model Endereco {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   rua         String
   numero      Int
   complemento String
   bairro      String
   cidade      String
   estado      String
-  pacienteID  Int      @unique
+  pacienteID  String   @unique @db.ObjectId
   paciente    Paciente @relation(fields: [pacienteID], references: [id])
 }
 
 model Profissional {
-  id         Int        @id @default(autoincrement())
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   nome       String
   nascimento DateTime
   cpf        String     @unique
@@ -50,10 +50,10 @@ model Profissional {
 }
 
 model Avaliacao {
-  id             Int          @id @default(autoincrement())
-  profissionalID Int          @unique
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  profissionalID String       @unique @db.ObjectId
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
-  pacienteID     Int          @unique
+  pacienteID     String       @unique @db.ObjectId
   paciente       Paciente     @relation(fields: [pacienteID], references: [id])
   data           DateTime
   status         Boolean
@@ -62,17 +62,18 @@ model Avaliacao {
 }
 
 model QA {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   pergunta    String
   resposta    String
-  avaliacoes   Avaliacao[]
+  Avaliacao   Avaliacao? @relation(fields: [avaliacaoId], references: [id])
+  avaliacaoId String?    @unique @db.ObjectId
 }
 
 model Consulta {
-  id             Int          @id @default(autoincrement())
-  profissionalID Int          @unique
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  profissionalID String       @unique @db.ObjectId
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
-  pacienteID     Int          @unique
+  pacienteID     String       @unique @db.ObjectId
   paciente       Paciente     @relation(fields: [pacienteID], references: [id])
   data           DateTime
   relatorio      String
