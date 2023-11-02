@@ -4,6 +4,7 @@ services:
     image : mongo
     container_name: mongodb
     environment:
+      - MONGODB_REPLICA_SET_MODE=primary
       - PUID=1000
       - PGID=1000
     volumes:

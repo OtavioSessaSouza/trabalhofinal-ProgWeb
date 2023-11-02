@@ -10,43 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// senha,
-// e-mail
-
 model Paciente {
   id                String      @id @default(auto()) @map("_id") @db.ObjectId
   nome              String
-  nascimento        DateTime
+  nascimento        String
   cpf               String      @unique
   contato           String
   contatoEmergencia String
   respCasoMenor     String?
-  prontuarioID      Int         @unique
-  endereco          Endereco?
+  endereco          Endereco?   @relation(fields: [enderecoId], references: [id])
   prontuario        Avaliacao[]
-  consulta          Consulta?
+  consulta          Consulta[]
+  enderecoId        String?     @db.ObjectId
 }
 
 model Endereco {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   rua         String
   numero      Int
   complemento String
   bairro      String
   cidade      String
   estado      String
-  pacienteID  String   @unique @db.ObjectId
-  paciente    Paciente @relation(fields: [pacienteID], references: [id])
+  Paciente    Paciente[]
 }
 
 model Profissional {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
   nome       String
-  nascimento DateTime
-  cpf        String     @unique
-  crp        String     @unique
-  Avaliacao  Avaliacao?
-  consulta   Consulta?
+  nascimento String
+  cpf        String      @unique
+  crp        String      @unique
+  avaliacao  Avaliacao[]
+  consulta   Consulta[]
 }
 
 model Avaliacao {
@@ -64,9 +60,9 @@ model Avaliacao {
 model QA {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   pergunta    String
-  resposta    String
+  resposta    String?
   Avaliacao   Avaliacao? @relation(fields: [avaliacaoId], references: [id])
-  avaliacaoId String?    @unique @db.ObjectId
+  avaliacaoId String?    @db.ObjectId
 }
 
 model Consulta {

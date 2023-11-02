@@ -1,0 +1,75 @@
+[{
+    "nome" :"Ahanka Shota",
+    "nascimento" : "1990-01-01",
+    "cpf" : "11111111111",
+    "contato" : "67960606060",
+    "contatoEmergencia" : "67961616161"
+},
+{
+    "nome" :"Shota Nakama",
+    "nascimento" : "2012-01-01",
+    "cpf" : "11111111112",
+    "contato" : "67961616161",
+    "contatoEmergencia" : "67961616161",
+    "respCasoMenor" : "67960606060"
+},
+{
+    "nome": "Bob Esponja",
+    "nascimento": "1986-05-02",
+    "cpf": "22222222222",
+    "contato": "55555555555",
+    "contatoEmergencia": "55556666666"
+},
+{
+    "nome": "Patty Panqueca",
+    "nascimento": "1995-12-15",
+    "cpf": "33333333333",
+    "contato": "77777777777",
+    "contatoEmergencia": "77778888888"
+},
+{
+    "nome": "Zé Trovão",
+    "nascimento": "1978-08-20",
+    "cpf": "44444444444",
+    "contato": "99999999999",
+    "contatoEmergencia": "99990000000"
+},
+{
+    "nome": "Lola Coelho",
+    "nascimento": "1980-04-30",
+    "cpf": "55555555555",
+    "contato": "12345678901",
+    "contatoEmergencia": "12346789012"
+},
+{
+    "nome": "Billy Batata",
+    "nascimento": "1992-07-10",
+    "cpf": "66666666666",
+    "contato": "23456789012",
+    "contatoEmergencia": "23456789023"
+},
+{
+    "nome": "Kana Sakura",
+    "nascimento": "2010-03-15",
+    "cpf": "11111111113",
+    "contato": "77778888888",
+    "contatoEmergencia": "77778888888",
+    "respCasoMenor": "77777777777"
+},
+{
+    "nome": "Hikari Yagami",
+    "nascimento": "2015-07-10",
+    "cpf": "11111111114",
+    "contato": "23456789023",
+    "contatoEmergencia": "23456789023",
+    "respCasoMenor": "23456789012"
+},
+{
+    "nome": "Naruto Uzumaki",
+    "nascimento": "2011-11-03",
+    "cpf": "11111111115",
+    "contato": "55556666666",
+    "contatoEmergencia": "55556666666",
+    "respCasoMenor": "55555555555"
+}
+]

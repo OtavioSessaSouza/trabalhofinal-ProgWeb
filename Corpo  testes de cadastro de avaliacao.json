@@ -1,0 +1,14 @@
+[
+    {
+        "profissionalID"  : "6543486df3027970eeabf95f",
+        "pacienteID" : "6543488af3027970eeabf964",
+        "status"  : false,
+        "perguntas" : [
+          {"pergunta" : "Desde a última consulta, você acha que seus sentimentos de tristeza, desânimo ou falta de esperança melhoraram, pioraram ou permaneceram inalterados?"},
+          {"pergunta" : "Se compararmos ao último encontro, você acredita que seu interesse ou prazer em atividades melhorou, piorou ou permaneceu o mesmo?"},
+          {"pergunta" : "Houve alguma mudança em seus padrões de sono, apetite, energia ou outros sintomas relacionados à depressão desde a última consulta? Eles melhoraram, pioraram ou permaneceram iguais?"}
+        ],
+        "condicao" : "Depressão"
+      }
+      
+]
