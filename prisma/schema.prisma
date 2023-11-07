@@ -47,9 +47,9 @@ model Profissional {
 
 model Avaliacao {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  profissionalID String       @unique @db.ObjectId
+  profissionalID String       @db.ObjectId
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
-  pacienteID     String       @unique @db.ObjectId
+  pacienteID     String       @db.ObjectId
   paciente       Paciente     @relation(fields: [pacienteID], references: [id])
   data           DateTime
   status         Boolean
@@ -67,9 +67,9 @@ model QA {
 
 model Consulta {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  profissionalID String       @unique @db.ObjectId
+  profissionalID String       @db.ObjectId
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
-  pacienteID     String       @unique @db.ObjectId
+  pacienteID     String       @db.ObjectId
   paciente       Paciente     @relation(fields: [pacienteID], references: [id])
   data           DateTime
   relatorio      String
