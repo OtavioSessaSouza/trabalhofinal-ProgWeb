@@ -1,8 +1,10 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { profissionalSchema } from "./validationProfissional";
 import avaliacaoController from "./avaliacaoController";
+import qaController from "./qaController";
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+
 const profissinalController = {
   criar: async (req: Request, res: Response) => {
     const { nome, nascimento, cpf, crp } = req.body;
@@ -34,14 +36,26 @@ const profissinalController = {
     }
   },
 
-  //esta errado
   listarPacientes: async (req: Request, res: Response) => {
-    const { profissionalID, pacienteID } = req.body;
+    const { profissionalID } = req.body;
     try {
-      const response = await prisma.paciente.findMany({
+      const avs = await prisma.Avaliacao.findMany({
         where: {
           profissionalID: profissionalID,
-          pacienteID: pacienteID,
+        },
+      });
+      const idsPacientes: any[] = [];
+      for (let i = 0; i < avs.length; i++) {
+        if (!idsPacientes.includes(avs[i].pacienteID)) {
+          idsPacientes.push(avs[i].pacienteID);
+        }
+      }
+
+      const response = await prisma.Paciente.findMany({
+        where: {
+          id: {
+            in: idsPacientes,
+          },
         },
       });
       return response
@@ -53,9 +67,39 @@ const profissinalController = {
       }
     }
   },
+  relatorio: async (req: Request, res: Response) => {
+    const { profissionalID, pacienteID } = req.body;
+    try {
+      const qasA = await qaController.AllqaAntes(profissionalID, pacienteID);
+      const qasD = await qaController.AllqaDepois(profissionalID, pacienteID);
+      const mediaAntes: number[] = [];
+      qasA?.map((qas) => mediaAntes.push(parseFloat(calculateAverage(qas))));
 
-  avaliacao: async (req: Request, res: Response) => {},
-  relatorio: async (req: Request, res: Response) => {},
+      const mediaDepois: number[] = [];
+      qasD?.map((qas) => mediaDepois.push(parseFloat(calculateAverage(qas))));
+
+      function calculateAverage(array: any[]) {
+        var total = 0;
+        var count = 0;
+
+        array.forEach(function (item, index) {
+          total += parseInt(item);
+          count++;
+        });
+        let temp = total / count;
+        return temp.toFixed(2);
+      }
+
+      const response = { mediaAntes: mediaAntes, mediaDepois: mediaDepois }; //devolvendo vetores de medias
+      return response
+        ? res.status(200).json(response)
+        : res.status(400).json({ message: "deu ruim" });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 
   //teste
   listarTodos: async (req: Request, res: Response) => {
